@@ -3,5 +3,8 @@ python:
     - "3.4"
 install:
     - pip install -r requirements.txt
+    - pip install coveralls
 script:
     - python manage.py test web
+    - coverage run --source=web manage.py test web
+after_success: coveralls
