@@ -41,7 +41,7 @@ class Partfinish(models.Model):
 
 
 class Address(models.Model):
-    company = models.ForeignKey('Companies', models.DO_NOTHING)
+    company = models.ForeignKey('Company', models.DO_NOTHING, related_name='company_address')
     line_1 = models.CharField(max_length=50)
     line_2 = models.CharField(max_length=50)
     line_3 = models.CharField(max_length=50)
