@@ -613,6 +613,9 @@ class User(models.Model):
     salt = models.CharField(max_length=24)
     active = models.IntegerField()
 
+    def __str__(self):
+        return '%s, %s - %s' % (self.lastname, self.firstname, self.email)
+    
     class Meta:
         managed = False
         db_table = 'users'
