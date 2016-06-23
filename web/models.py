@@ -72,20 +72,6 @@ class AppVersion(models.Model):
         db_table = 'app_versions'
 
 
-class Calendar(models.Model):
-    datefield = models.DateField()
-    year = models.SmallIntegerField()
-    month = models.IntegerField()
-    day_of_week = models.IntegerField()
-    day_of_year = models.SmallIntegerField()
-    day_of_month = models.IntegerField()
-    week = models.IntegerField()
-
-    class Meta:
-        managed = False
-        db_table = 'calendar'
-
-
 class Changelog(models.Model):
     revision_id = models.IntegerField()
     note = models.CharField(max_length=100)
@@ -94,17 +80,6 @@ class Changelog(models.Model):
         managed = False
         db_table = 'changelog'
 
-
-class CiSession(models.Model):
-    session_id = models.CharField(primary_key=True, max_length=40)
-    ip_address = models.CharField(max_length=45)
-    last_activity = models.IntegerField()
-    user_agent = models.CharField(max_length=120)
-    user_data = models.TextField()
-
-    class Meta:
-        managed = False
-        db_table = 'ci_sessions'
 
 
 class Company(models.Model):
@@ -350,25 +325,6 @@ class MatReq(models.Model):
         db_table = 'mat_reqs'
 
 
-class MonthNames(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=15)
-
-    class Meta:
-        managed = False
-        db_table = 'month_names'
-
-
-class NCiSessions(models.Model):
-    id = models.CharField(primary_key=True, max_length=40)
-    ip_address = models.CharField(max_length=45)
-    timestamp = models.IntegerField()
-    data = models.TextField()
-
-    class Meta:
-        managed = False
-        db_table = 'n_ci_sessions'
-
 
 class OldOrderline(models.Model):
     ol_id = models.IntegerField()
@@ -413,6 +369,9 @@ class Orderline(models.Model):
     shipdate = models.DateField(db_column='shipDate', blank=True, null=True)  # Field name made lowercase.
     status = models.IntegerField()
     item_rev = models.ForeignKey(ItemRevision, models.DO_NOTHING, db_column='item_rev', blank=True, null=True)
+    
+    def __str__(self):
+        return '%i %s Rev: %s on PO %s' % (self.quantity, self.item_rev.item.item_number, self.item_rev.name, self.o.custpo)
 
     class Meta:
         managed = False
@@ -641,17 +600,4 @@ class VmiInventory(models.Model):
         unique_together = (('item_revision', 'location'),)
 
 
-class VmiLabels(models.Model):
-    part = models.CharField(db_column='Part', unique=True, max_length=50)  # Field name made lowercase.
 
-    class Meta:
-        managed = False
-        db_table = 'vmi_labels'
-
-
-class VmiLocations(models.Model):
-    name = models.CharField(max_length=50)
-
-    class Meta:
-        managed = False
-        db_table = 'vmi_locations'
