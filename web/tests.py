@@ -31,4 +31,12 @@ class ItemRevisionModelTests(TestCase):
         item_rev = ItemRevision(item=item, name=rev_name)
         s = '%s %s' % (item_num, rev_name)
         self.assertEquals(item_rev.__str__(), s) 
-        
+
+class UserModelTests(TestCase):
+    def test_str_shows_full_name_and_email(self):
+        first_name = 'Test'
+        last_name = 'Person'
+        email = 'test@aol.com'
+        user = User(lastname=last_name, firstname=first_name, email=email)
+        s = '%s, %s - %s' % (last_name, first_name, email)
+        self.assertEquals(user.__str__(), s)
