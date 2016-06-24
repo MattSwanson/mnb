@@ -75,13 +75,23 @@ WSGI_APPLICATION = 'mnb.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'MNB',
-        'USER': 'root',        
+if os.getenv('TRAVIS', None):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'MNB',
+            'USER': 'root',        
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'MNB',
+            'USER': 'devel',
+            'PASSWORD': 'devPass',
+        }
+    }
 
 
 # Password validation
