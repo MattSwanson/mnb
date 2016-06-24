@@ -92,6 +92,17 @@ class InitViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "This is the beginning...")
 
+class BagModelTests(TestCase):
+    def test_str(self):
+        bag = Bag(size='3x3', mil=4, top='zip')
+        self.assertEqual(bag.__str__(), '3x3 zip 4mil')
+
+class BoxModelTests(TestCase):
+    def test_str(self):
+        box = Box(length=16, width=12, height=9)
+        self.assertEqual(box.__str__(), '16x12x9')
+
+
 class ItemModelTests(TestCase):
     def test_str(self):
         item_num = 'Test123'

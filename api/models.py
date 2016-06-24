@@ -14,6 +14,9 @@ class Bag(models.Model):
     size = models.CharField(max_length=5)
     mil = models.IntegerField()
     top = models.CharField(max_length=6)
+    
+    def __str__(self):
+        return '%s %s %imil' % (self.size, self.top, self.mil)
 
     class Meta:
         managed = False
@@ -25,6 +28,9 @@ class Box(models.Model):
     length = models.IntegerField()
     width = models.IntegerField()
     height = models.IntegerField()
+
+    def __str__(self):
+        return '%ix%ix%i' % (self.length, self.width, self.height)
 
     class Meta:
         managed = False
