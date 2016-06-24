@@ -9,5 +9,5 @@ install:
     - pip install coveralls
 script:
     - python manage.py test --settings=api.test_settings api
-    - coverage run --source=api manage.py --settings=api.test_settings test api
+    - coverage run --source=api manage.py test --settings=api.test_settings api
 after_success: coveralls
