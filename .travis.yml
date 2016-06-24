@@ -8,6 +8,6 @@ install:
     - pip install PyMySQL
     - pip install coveralls
 script:
-    - python manage.py test web
-    - coverage run --source=web manage.py test web
+    - python manage.py test api
+    - coverage run --source=api manage.py test api
 after_success: coveralls
