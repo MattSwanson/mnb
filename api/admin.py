@@ -1,5 +1,5 @@
 from django.contrib import admin
-from web.models import *
+from api.models import *
 
 admin.site.register(Bag)
 admin.site.register(Box)

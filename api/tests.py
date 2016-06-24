@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 
-from web.models import *
+from api.models import *
 
 # Create your tests here.
 
@@ -12,7 +12,7 @@ class SimpleTests(TestCase):
 
 class InitViewTests(TestCase):
     def test_index(self):
-        response = self.client.get(reverse('web:index'))
+        response = self.client.get(reverse('api:index'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "This is the beginning...")
 
@@ -31,6 +31,20 @@ class ItemRevisionModelTests(TestCase):
         item_rev = ItemRevision(item=item, name=rev_name)
         s = '%s %s' % (item_num, rev_name)
         self.assertEquals(item_rev.__str__(), s) 
+
+class OrderlineModelTests(TestCase):
+    def test_str_shows_qty_item_number_rev_name_po(self):
+        qty = 100
+        item_number = 'TestItem1'
+        item_rev = '01'
+        po_number = 'TestPO1'
+        item = Item(item_number=item_number)
+        item_revision = ItemRevision(item=item, name=item_rev)
+        customer = Company(name='Test Company')
+        order = Order(custid=customer, custpo=po_number)
+        orderline = Orderline(quantity=qty, item_rev=item_revision, o=order)
+        s = '%i %s Rev: %s on PO %s' % (qty, item_number, item_rev, po_number)
+        self.assertEquals(orderline.__str__(), s)
 
 class UserModelTests(TestCase):
     def test_str_shows_full_name_and_email(self):
