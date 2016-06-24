@@ -88,6 +88,9 @@ class Company(models.Model):
     homepage = models.CharField(db_column='homePage', max_length=50)  # Field name made lowercase.
     address = models.CharField(max_length=75, blank=True, null=True)
     phone = models.CharField(max_length=20)
+    
+    def __str__(self):
+        return self.name
 
     class Meta:
         managed = False
@@ -582,6 +585,9 @@ class User(models.Model):
 
 class Vendor(models.Model):
     company = models.ForeignKey(Company, models.DO_NOTHING)
+    
+    def __str__(self):
+        return self.company.name
 
     class Meta:
         managed = False
