@@ -7,7 +7,16 @@ from api.models import *
 
 # Create your tests here.
 
-
+def create_test_uoms():
+    uoms = { 
+            0: {'name':'Pounds', 'abbrv':'lbs'},
+            1: {'name':'Pieces', 'abbrv':'pcs'},
+            2: {'name':'Inches', 'abbrv':'in'},
+            3: {'name':'Feet', 'abbrv':'ft'},
+    }
+    for i in uoms:
+        u = Uom(name=uoms[i]['name'], abbrv=uoms[i]['abbrv'])
+        u.save()
 
 # Create some test companies for use with various models for testing
 def create_test_companies():
@@ -26,14 +35,14 @@ def create_test_companies():
 # Each item will also have 3 item revisions generated for it as well
 def create_test_items(qty):
     create_test_companies()
-    test_uom = Uom(name='Pieces', abbrv = 'pcs')
-    test_uom.save()
+    create_test_uoms()
+    uom = Uom.objects.first()
     test_vendor = Vendor.objects.last()
     date = timezone.now()
     
     for i in range(1,qty+1):
         item_number = 'TestItem%i' % (i)
-        item = Item(item_number=item_number, pref_vendor=test_vendor, def_uom=test_uom)
+        item = Item(item_number=item_number, pref_vendor=test_vendor, def_uom=uom)
         item.save()
         for j in range(1,4):
             rev_name = '0%i' % (j)
