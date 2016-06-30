@@ -1,11 +1,25 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
+from rest_framework.test import APITestCase
+from rest_framework import status
 from django.utils import timezone
 
 
 from api.models import *
 
 # Create your tests here.
+
+def create_test_bags():
+    bags = {
+            0: {'size':'3x3', 'mil': 4, 'top':'zip'},
+            1: {'size':'4x6', 'mil': 2, 'top':'zip'},
+            2: {'size':'5x7', 'mil': 4, 'top':'ziphh'},
+    }
+    for i in bags:
+        b = Bag(size=bags[i]['size'], mil=bags[i]['mil'],
+                top=bags[i]['top'])
+        b.save()
+
 
 def create_test_uoms():
     uoms = { 
@@ -95,12 +109,6 @@ class SimpleTests(TestCase):
         x = 1
         self.assertEqual(x,1)
 
-class InitViewTests(TestCase):
-    def test_index(self):
-        response = self.client.get(reverse('api:index'))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "This is the beginning...")
-
 class BagModelTests(TestCase):
     def test_str(self):
         bag = Bag(size='3x3', mil=4, top='zip')
@@ -150,3 +158,12 @@ class UserModelTests(TestCase):
         user = User(lastname=last_name, firstname=first_name, email=email)
         s = '%s, %s - %s' % (last_name, first_name, email)
         self.assertEquals(user.__str__(), s)
+
+class ApiEndpointTests(APITestCase):
+    def test_bag_ep(self):
+        create_test_bags()
+        response = self.client.get('/api/bags/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 3)
+
+       
