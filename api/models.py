@@ -240,7 +240,7 @@ class ItemReq(models.Model):
 
 
 class ItemRevision(models.Model):
-    item = models.ForeignKey('Item', models.DO_NOTHING)
+    item = models.ForeignKey('Item', models.DO_NOTHING, related_name='revisions')
     name = models.CharField(max_length=10)
     eff_date = models.DateField()
     live_inv = models.IntegerField(blank=True, null=True)

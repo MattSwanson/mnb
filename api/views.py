@@ -4,8 +4,8 @@ from rest_framework.reverse import reverse
 from rest_framework.decorators import api_view
 from rest_framework import viewsets
 
-from api.models import Bag
-from api.serializers import BagSerializer
+from api.models import *
+from api.serializers import *
 
 @api_view(['GET'])
 def api_root(request, format=None):
@@ -17,8 +17,12 @@ class BagViewSet(viewsets.ModelViewSet):
     queryset = Bag.objects.all()
     serializer_class = BagSerializer
 
+class ItemViewSet(viewsets.ModelViewSet):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
 
-def index(request):
-    return HttpResponse("This is the beginning...")
+class ItemRevisionViewSet(viewsets.ModelViewSet):
+    queryset = ItemRevision.objects.all()
+    serializer_class = ItemRevisionSerializer
 
 
