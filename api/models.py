@@ -246,7 +246,7 @@ class ItemRevision(models.Model):
     live_inv = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
-        return '%s %s' % (self.item, self.name)
+        return '%s - %s' % (self.name, self.eff_date)
 
     class Meta:
         managed = False

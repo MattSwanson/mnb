@@ -7,16 +7,21 @@ class BagSerializer(serializers.ModelSerializer):
         model = Bag
         fields = ('size', 'mil', 'top')
 
+class ItemRevisionSerializer(serializers.ModelSerializer):
+    item = serializers.StringRelatedField()
+
+    class Meta:
+        model = ItemRevision
+        fields = ('item', 'name', 'eff_date', 'live_inv')
+
 class ItemSerializer(serializers.ModelSerializer):
-    revisions = serializers.StringRelatedField(many=True)
+    revisions = ItemRevisionSerializer(many=True, read_only=True)
 
     class Meta:
         model = Item
         fields = ('item_number', 'pref_vendor', 'def_uom', 'live_inv', 'revisions')
 
-
-class ItemRevisionSerializer(serializers.ModelSerializer):
-    
+class FinishSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ItemRevision
-        fields = ('item', 'name', 'eff_date', 'live_inv')
+        model = Finish
+        fields = ('id', 'name', 'company', 'description', 'baseprice', 'level')

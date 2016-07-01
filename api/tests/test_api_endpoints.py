@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from rest_framework.test import APITestCase
 from rest_framework import status
 from django.utils import timezone
-from .tests import create_test_items
+from .tests import create_test_items, create_test_companies
 
 from api.models import *
 
@@ -32,3 +32,12 @@ class ApiEndpointTests(APITestCase):
         response = self.client.get('/api/items/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.json()['results']), 5)
+
+    def test_finish_ep(self):
+        create_test_companies()
+        company = Company.objects.last().id
+        f = Finish(id=1, name='Test Finish', company=company, baseprice=0)
+        f.save()
+        r = self.client.get('/api/finishes/')
+        self.assertEqual(r.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(r.json()['results']), 1)

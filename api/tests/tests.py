@@ -59,15 +59,15 @@ class TestFunctionTests(TestCase):
         create_test_items(3)
         exp_items_qs = ['<Item: TestItem1>', '<Item: TestItem2>', '<Item: TestItem3>']
         exp_item_revs_qs = [
-            '<ItemRevision: TestItem1 01>',
-            '<ItemRevision: TestItem1 02>',
-            '<ItemRevision: TestItem1 03>',
-            '<ItemRevision: TestItem2 01>',
-            '<ItemRevision: TestItem2 02>',
-            '<ItemRevision: TestItem2 03>',
-            '<ItemRevision: TestItem3 01>',
-            '<ItemRevision: TestItem3 02>',
-            '<ItemRevision: TestItem3 03>'
+            '<ItemRevision: 01 - 2016-07-01>',
+            '<ItemRevision: 02 - 2016-07-01>',
+            '<ItemRevision: 03 - 2016-07-01>',
+            '<ItemRevision: 01 - 2016-07-01>',
+            '<ItemRevision: 02 - 2016-07-01>',
+            '<ItemRevision: 03 - 2016-07-01>',
+            '<ItemRevision: 01 - 2016-07-01>',
+            '<ItemRevision: 02 - 2016-07-01>',
+            '<ItemRevision: 03 - 2016-07-01>'
         ]
         items = Item.objects.all().order_by('item_number')
         item_revisions = ItemRevision.objects.all().order_by('pk')
@@ -120,9 +120,10 @@ class ItemRevisionModelTests(TestCase):
     def test_str(self):
         item_num = 'Test123'
         rev_name = '01'
+        eff_date = '2016-07-01'
         item = Item(item_number=item_num)
-        item_rev = ItemRevision(item=item, name=rev_name)
-        s = '%s %s' % (item_num, rev_name)
+        item_rev = ItemRevision(item=item, name=rev_name, eff_date=eff_date)
+        s = '%s - %s' % (rev_name, eff_date)
         self.assertEquals(item_rev.__str__(), s) 
 
 class OrderlineModelTests(TestCase):
