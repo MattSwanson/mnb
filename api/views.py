@@ -23,3 +23,7 @@ class ItemRevisionViewSet(viewsets.ModelViewSet):
 class FinishViewSet(viewsets.ModelViewSet):
     queryset = Finish.objects.all()
     serializer_class = FinishSerializer
+
+class PartViewSet(viewsets.ModelViewSet):
+    queryset = Part.objects.all()
+    serializer_class = PartSerializer

@@ -36,8 +36,18 @@ class ApiEndpointTests(APITestCase):
     def test_finish_ep(self):
         create_test_companies()
         company = Company.objects.last().id
-        f = Finish(id=1, name='Test Finish', company=company, baseprice=0)
+        f = Finish(id=1, name='Test Finish', company=company)
         f.save()
         r = self.client.get('/api/finishes/')
+        self.assertEqual(r.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(r.json()['results']), 1)
+
+    def test_part_ep(self):
+        create_test_items(1)
+        item_rev = ItemRevision.objects.last()
+        p = Part(partdesc="Test Part", size="Test Size", item_revision=item_rev,
+                 origin='USA')
+        p.save()
+        r = self.client.get('/api/parts/')
         self.assertEqual(r.status_code, status.HTTP_200_OK)
         self.assertEqual(len(r.json()['results']), 1)

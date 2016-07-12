@@ -79,7 +79,7 @@ class AppVersion(models.Model):
 
 
 class Changelog(models.Model):
-    revision_id = models.IntegerField()
+    revision = models.ForeignKey('RevisionLevel', models.DO_NOTHING, db_column='revision')
     note = models.CharField(max_length=100)
 
     class Meta:
@@ -123,7 +123,7 @@ class DjangoMigrations(models.Model):
     applied = models.DateTimeField()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'django_migrations'
 
 
@@ -162,7 +162,6 @@ class Finish(models.Model):
     name = models.CharField(max_length=50)
     company = models.IntegerField()
     description = models.TextField()
-    baseprice = models.SmallIntegerField()
     level = models.IntegerField(blank=True, null=True)
 
     class Meta:
@@ -276,9 +275,7 @@ class ItemTransitionRule(models.Model):
 
 class Item(models.Model):
     item_number = models.CharField(unique=True, max_length=50)
-    pref_vendor = models.ForeignKey('Vendor', models.DO_NOTHING, db_column='pref_vendor')
     def_uom = models.ForeignKey('Uom', models.DO_NOTHING, db_column='def_uom')
-    live_inv = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.item_number
@@ -399,12 +396,9 @@ class Order(models.Model):
 
 
 class Part(models.Model):
-    partnumber = models.CharField(db_column='PartNumber', max_length=50)  # Field name made lowercase.
     partdesc = models.CharField(db_column='PartDesc', max_length=100, blank=True, null=True)  # Field name made lowercase.
-    orderqty = models.IntegerField(db_column='orderQty')  # Field name made lowercase.
     size = models.CharField(max_length=30)
     origin = models.CharField(max_length=20)
-    clot = models.CharField(db_column='cLot', max_length=25, blank=True, null=True)  # Field name made lowercase.
     item_revision = models.ForeignKey(ItemRevision, models.DO_NOTHING, db_column='item_revision', unique=True)
 
     class Meta:
@@ -414,8 +408,6 @@ class Part(models.Model):
 
 class PjItem(models.Model):
     job_id = models.IntegerField()
-    part_num = models.CharField(max_length=50)
-    item_id = models.IntegerField()
     qty = models.IntegerField()
     lot = models.CharField(max_length=30)
     label_type = models.CharField(max_length=5)

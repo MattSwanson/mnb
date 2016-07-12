@@ -40,12 +40,11 @@ def create_test_items(qty):
     create_test_companies()
     create_test_uoms()
     uom = Uom.objects.first()
-    test_vendor = Vendor.objects.last()
     date = timezone.now()
     
     for i in range(1,qty+1):
         item_number = 'TestItem%i' % (i)
-        item = Item(item_number=item_number, pref_vendor=test_vendor, def_uom=uom)
+        item = Item(item_number=item_number, def_uom=uom)
         item.save()
         for j in range(1,4):
             rev_name = '0%i' % (j)
@@ -56,23 +55,11 @@ def create_test_items(qty):
 class TestFunctionTests(TestCase):
     # Ensure test items are being created properly
     def test_create_test_items(self):
-        create_test_items(3)
-        exp_items_qs = ['<Item: TestItem1>', '<Item: TestItem2>', '<Item: TestItem3>']
-        exp_item_revs_qs = [
-            '<ItemRevision: 01 - 2016-07-01>',
-            '<ItemRevision: 02 - 2016-07-01>',
-            '<ItemRevision: 03 - 2016-07-01>',
-            '<ItemRevision: 01 - 2016-07-01>',
-            '<ItemRevision: 02 - 2016-07-01>',
-            '<ItemRevision: 03 - 2016-07-01>',
-            '<ItemRevision: 01 - 2016-07-01>',
-            '<ItemRevision: 02 - 2016-07-01>',
-            '<ItemRevision: 03 - 2016-07-01>'
-        ]
-        items = Item.objects.all().order_by('item_number')
-        item_revisions = ItemRevision.objects.all().order_by('pk')
-        self.assertQuerysetEqual(items, exp_items_qs)
-        self.assertQuerysetEqual(item_revisions, exp_item_revs_qs)
+        create_test_items(3) 
+        items = Item.objects.all()
+        item_revisions = ItemRevision.objects.all()
+        self.assertEqual(items.count(), 3)
+        self.assertEqual(item_revisions.count(), 9)
 
     # Ensure test companies are being created properly
     def test_create_test_companies(self):

@@ -19,9 +19,16 @@ class ItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-        fields = ('item_number', 'pref_vendor', 'def_uom', 'live_inv', 'revisions')
+        fields = ('item_number', 'def_uom', 'revisions')
 
 class FinishSerializer(serializers.ModelSerializer):
     class Meta:
         model = Finish
-        fields = ('id', 'name', 'company', 'description', 'baseprice', 'level')
+        fields = ('id', 'name', 'company', 'description', 'level')
+
+class PartSerializer(serializers.ModelSerializer):
+    item_revision = ItemRevisionSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = Part
+        fields = ('item_revision', 'partdesc', 'size', 'origin')
