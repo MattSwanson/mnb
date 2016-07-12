@@ -24,7 +24,7 @@ class ItemSerializer(serializers.ModelSerializer):
 class FinishSerializer(serializers.ModelSerializer):
     class Meta:
         model = Finish
-        fields = ('id', 'name', 'company', 'description', 'level')
+        fields = ('id', 'name', 'description', 'level')
 
 class PartSerializer(serializers.ModelSerializer):
     item_revision = ItemRevisionSerializer(many=False, read_only=True)

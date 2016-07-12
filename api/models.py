@@ -160,7 +160,6 @@ class File(models.Model):
 class Finish(models.Model):
     id = models.SmallIntegerField(primary_key=True)
     name = models.CharField(max_length=50)
-    company = models.IntegerField()
     description = models.TextField()
     level = models.IntegerField(blank=True, null=True)
 

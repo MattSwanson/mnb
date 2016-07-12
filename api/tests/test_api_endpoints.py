@@ -36,7 +36,7 @@ class ApiEndpointTests(APITestCase):
     def test_finish_ep(self):
         create_test_companies()
         company = Company.objects.last().id
-        f = Finish(id=1, name='Test Finish', company=company)
+        f = Finish(id=1, name='Test Finish')
         f.save()
         r = self.client.get('/api/finishes/')
         self.assertEqual(r.status_code, status.HTTP_200_OK)
