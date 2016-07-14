@@ -7,6 +7,11 @@ class BagSerializer(serializers.ModelSerializer):
         model = Bag
         fields = ('size', 'mil', 'top')
 
+class BoxSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Box
+        fields = ('length', 'width', 'height')
+
 class ItemRevisionSerializer(serializers.ModelSerializer):
     item = serializers.StringRelatedField()
 
@@ -33,9 +38,19 @@ class PartSerializer(serializers.ModelSerializer):
         model = Part
         fields = ('item_revision', 'partdesc', 'size', 'origin')
 
+class KitpartSerializer(serializers.ModelSerializer):
+    part_rev = ItemRevisionSerializer(many=False, read_only=True)
+    class Meta:
+        model = Kitpart
+        fields = ('partqty', 'partuom', 'part_rev')
+
 class KitSerializer(serializers.ModelSerializer):
     item_revision = ItemRevisionSerializer(many=False, read_only=True)
+    bagtype = BagSerializer(many=False)
+    boxtype = BoxSerializer(many=False)
+    kitparts = KitpartSerializer(many=True, read_only=True)
 
     class Meta:
         model = Kit
-        fields = ('kitname', 'bagtype', 'boxtype', 'ctnqty', 'item_revision')
+        fields = ('kitname', 'bagtype', 'boxtype', 'ctnqty', 'kitparts', 'item_revision')
+ 

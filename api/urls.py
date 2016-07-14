@@ -11,6 +11,8 @@ router.register(r'item_revisions', views.ItemRevisionViewSet)
 router.register(r'finishes', views.FinishViewSet)
 router.register(r'parts', views.PartViewSet)
 router.register(r'kits', views.KitViewSet)
+router.register(r'boxes', views.BoxViewSet)
+router.register(r'kitparts', views.KitpartViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),

@@ -12,6 +12,10 @@ class BagViewSet(viewsets.ModelViewSet):
     queryset = Bag.objects.all()
     serializer_class = BagSerializer
 
+class BoxViewSet(viewsets.ModelViewSet):
+    queryset = Box.objects.all()
+    serializer_class = BoxSerializer
+
 class ItemViewSet(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
@@ -31,3 +35,7 @@ class PartViewSet(viewsets.ModelViewSet):
 class KitViewSet(viewsets.ModelViewSet):
     queryset = Kit.objects.all()
     serializer_class = KitSerializer
+
+class KitpartViewSet(viewsets.ModelViewSet):
+    queryset = Kitpart.objects.all()
+    serializer_class = KitpartSerializer

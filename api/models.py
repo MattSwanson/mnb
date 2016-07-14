@@ -285,7 +285,7 @@ class Item(models.Model):
 
 
 class Kitpart(models.Model):
-    kit = models.ForeignKey('Kit', models.DO_NOTHING)
+    kit = models.ForeignKey('Kit', models.DO_NOTHING, related_name='kitparts')
     partqty = models.IntegerField(db_column='PartQty')  # Field name made lowercase.
     partuom = models.ForeignKey('Uom', models.DO_NOTHING, db_column='PartUOM')  # Field name made lowercase.
     item_rev = models.ForeignKey(ItemRevision, models.DO_NOTHING, related_name='kit_item_revision', db_column='item_rev')
@@ -298,8 +298,8 @@ class Kitpart(models.Model):
 
 class Kit(models.Model):
     kitname = models.CharField(db_column='KitName', max_length=50)  # Field name made lowercase.
-    bagtype = models.IntegerField(db_column='BagType')  # Field name made lowercase.
-    boxtype = models.SmallIntegerField(db_column='BoxType')  # Field name made lowercase.
+    bagtype = models.ForeignKey(Bag, models.DO_NOTHING, db_column='BagType')  # Field name made lowercase.
+    boxtype = models.ForeignKey(Box, models.DO_NOTHING, db_column='BoxType')  # Field name made lowercase.
     ctnqty = models.IntegerField(db_column='CtnQty')  # Field name made lowercase.
     item_revision = models.ForeignKey(ItemRevision, models.DO_NOTHING, db_column='item_revision')
 

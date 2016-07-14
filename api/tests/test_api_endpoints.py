@@ -64,9 +64,15 @@ class ApiEndpointTests(APITestCase):
         box = Box.objects.last()
         item_rev = ItemRevision.objects.last()
         k = Kit(kitname='Test Kit', ctnqty='90', item_revision=item_rev,
-                bagtype=1, boxtype=1)
+                bagtype=bag, boxtype=box)
         k.save()
         r = self.client.get('/api/kits/')
+        self.assertEqual(r.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(r.json()['results']), 1)
+
+    def test_box_ep(self):
+        create_test_box()
+        r = self.client.get('/api/boxes/')
         self.assertEqual(r.status_code, status.HTTP_200_OK)
         self.assertEqual(len(r.json()['results']), 1)
         
