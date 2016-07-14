@@ -32,3 +32,10 @@ class PartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Part
         fields = ('item_revision', 'partdesc', 'size', 'origin')
+
+class KitSerializer(serializers.ModelSerializer):
+    item_revision = ItemRevisionSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = Kit
+        fields = ('kitname', 'bagtype', 'boxtype', 'ctnqty', 'item_revision')

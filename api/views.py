@@ -27,3 +27,7 @@ class FinishViewSet(viewsets.ModelViewSet):
 class PartViewSet(viewsets.ModelViewSet):
     queryset = Part.objects.all()
     serializer_class = PartSerializer
+
+class KitViewSet(viewsets.ModelViewSet):
+    queryset = Kit.objects.all()
+    serializer_class = KitSerializer

@@ -10,6 +10,7 @@ router.register(r'items', views.ItemViewSet)
 router.register(r'item_revisions', views.ItemRevisionViewSet)
 router.register(r'finishes', views.FinishViewSet)
 router.register(r'parts', views.PartViewSet)
+router.register(r'kits', views.KitViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),

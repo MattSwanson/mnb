@@ -20,6 +20,10 @@ def create_test_bags():
                 top=bags[i]['top'])
         b.save()
 
+def create_test_box():
+    b = Box(id=1, length='10', width='10', height='10')
+    b.save()
+
 class ApiEndpointTests(APITestCase):
     def test_bag_ep(self):
         create_test_bags()
@@ -51,3 +55,18 @@ class ApiEndpointTests(APITestCase):
         r = self.client.get('/api/parts/')
         self.assertEqual(r.status_code, status.HTTP_200_OK)
         self.assertEqual(len(r.json()['results']), 1)
+
+    def test_kit_ep(self):
+        create_test_items(1)
+        create_test_bags()
+        create_test_box()
+        bag = Bag.objects.last()
+        box = Box.objects.last()
+        item_rev = ItemRevision.objects.last()
+        k = Kit(kitname='Test Kit', ctnqty='90', item_revision=item_rev,
+                bagtype=1, boxtype=1)
+        k.save()
+        r = self.client.get('/api/kits/')
+        self.assertEqual(r.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(r.json()['results']), 1)
+        
