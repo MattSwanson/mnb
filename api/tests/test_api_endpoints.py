@@ -75,4 +75,10 @@ class ApiEndpointTests(APITestCase):
         r = self.client.get('/api/boxes/')
         self.assertEqual(r.status_code, status.HTTP_200_OK)
         self.assertEqual(len(r.json()['results']), 1)
-        
+       
+    def test_uom_ep(self):
+        u = Uom(name="Pieces", abbrv='pcs')
+        u.save()
+        r = self.client.get('/api/uoms/')
+        self.assertEqual(r.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(r.json()['results']), 1)

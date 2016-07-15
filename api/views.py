@@ -16,6 +16,10 @@ class BoxViewSet(viewsets.ModelViewSet):
     queryset = Box.objects.all()
     serializer_class = BoxSerializer
 
+class UomViewSet(viewsets.ModelViewSet):
+    queryset = Uom.objects.all()
+    serializer_class = UomSerializer
+
 class ItemViewSet(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer

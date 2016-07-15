@@ -398,7 +398,7 @@ class Part(models.Model):
     partdesc = models.CharField(db_column='PartDesc', max_length=100, blank=True, null=True)  # Field name made lowercase.
     size = models.CharField(max_length=30)
     origin = models.CharField(max_length=20)
-    item_revision = models.ForeignKey(ItemRevision, models.DO_NOTHING, db_column='item_revision', unique=True)
+    item_revision = models.OneToOneField(ItemRevision, models.DO_NOTHING, db_column='item_revision', unique=True, related_name='part')
 
     class Meta:
         managed = False
@@ -534,6 +534,9 @@ class Shipment(models.Model):
 class Uom(models.Model):
     name = models.CharField(max_length=20)
     abbrv = models.CharField(max_length=7)
+
+    def __str__(self):
+        return self.abbrv    
 
     class Meta:
         managed = False

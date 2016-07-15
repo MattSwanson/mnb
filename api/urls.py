@@ -13,6 +13,7 @@ router.register(r'parts', views.PartViewSet)
 router.register(r'kits', views.KitViewSet)
 router.register(r'boxes', views.BoxViewSet)
 router.register(r'kitparts', views.KitpartViewSet)
+router.register(r'uoms', views.UomViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
