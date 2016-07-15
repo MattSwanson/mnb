@@ -7,8 +7,8 @@ install:
     - pip install -r requirements.txt
     - pip install PyMySQL
     - pip install coveralls
-    - pip install djangorestframework
-    - pip install django-rest-swagger
+    - pip install djangorestframework==3.3.3
+    - pip install django-rest-swagger==0.3.8
 script:
     - python manage.py test --settings=api.test_settings api
     - coverage run --source=api manage.py test --settings=api.test_settings api
